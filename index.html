@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will You Be My Valentine, Ammu? 💖</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            font-family: 'Georgia', 'Times New Roman', serif;
         }
         
         body {
             min-height: 100vh;
-            background: linear-gradient(-45deg, #ff758c, #ff7eb3, #ffafbd, #ffc3a0);
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0, #ffd3b6);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             display: flex;
@@ -23,6 +22,7 @@
             align-items: center;
             padding: 20px;
             overflow-x: hidden;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='28' fill='%23ff4081'%3E❤️%3C/text%3E%3C/svg%3E") 16 16, auto;
         }
         
         @keyframes gradientBG {
@@ -34,13 +34,20 @@
         .container {
             max-width: 900px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
             text-align: center;
             position: relative;
             overflow: hidden;
+            border: 3px solid rgba(255, 192, 203, 0.4);
+            animation: containerAppear 1s ease-out;
+        }
+        
+        @keyframes containerAppear {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         
         .valentine-content {
@@ -50,71 +57,231 @@
         
         .title {
             color: #d32f75;
-            font-size: 3.2rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 4rem;
+            margin-bottom: 40px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15);
             animation: heartbeat 1.5s ease-in-out infinite;
+            font-family: 'Brush Script MT', cursive;
+            letter-spacing: 2px;
         }
         
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.08); }
         }
         
-        .message {
+        .subtitle {
             color: #8a0a3a;
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-            line-height: 1.6;
+            font-size: 1.6rem;
+            margin-bottom: 60px;
+            font-style: italic;
+            opacity: 0.9;
         }
         
         .buttons-container {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin: 50px 0;
+            gap: 60px;
+            margin: 60px 0 40px;
             position: relative;
-            min-height: 120px;
+            min-height: 150px;
+            animation: buttonsAppear 1s ease-out 0.5s both;
+        }
+        
+        @keyframes buttonsAppear {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .btn {
-            padding: 20px 50px;
-            font-size: 2rem;
+            padding: 25px 70px;
+            font-size: 2.5rem;
             border: none;
-            border-radius: 60px;
+            border-radius: 70px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-weight: bold;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
             position: relative;
             z-index: 10;
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+            letter-spacing: 1px;
         }
         
         .yes-btn {
             background: linear-gradient(45deg, #ff4081, #ff79a6);
             color: white;
-            border: 3px solid transparent;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            animation: yesGlow 2s infinite alternate;
+        }
+        
+        @keyframes yesGlow {
+            from { box-shadow: 0 15px 30px rgba(255, 64, 129, 0.3), 0 0 20px rgba(255, 64, 129, 0.5); }
+            to { box-shadow: 0 15px 30px rgba(255, 64, 129, 0.5), 0 0 30px rgba(255, 64, 129, 0.7); }
         }
         
         .yes-btn:hover, .yes-btn:focus {
             background: linear-gradient(45deg, #f50057, #ff4081);
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(245, 0, 87, 0.4);
+            transform: scale(1.15);
+            box-shadow: 0 20px 40px rgba(245, 0, 87, 0.5), 0 0 40px rgba(245, 0, 87, 0.7);
         }
         
         .no-btn {
             background: linear-gradient(45deg, #6d6d6d, #4a4a4a);
             color: white;
-            border: 3px solid transparent;
+            border: 4px solid rgba(255, 255, 255, 0.3);
         }
         
         .no-btn:hover {
             background: linear-gradient(45deg, #5a5a5a, #333);
         }
         
+        /* Celebration Message (Initially Hidden) */
+        .celebration-message {
+            display: none;
+            background: linear-gradient(45deg, rgba(255, 64, 129, 0.1), rgba(255, 121, 166, 0.1));
+            border-radius: 30px;
+            padding: 60px 40px;
+            margin: 30px 0;
+            border: 4px solid rgba(255, 64, 129, 0.2);
+            animation: celebrationAppear 1s ease-out;
+        }
+        
+        @keyframes celebrationAppear {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .celebration-title {
+            color: #d32f75;
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            animation: celebrationHeartbeat 0.8s infinite alternate;
+            font-family: 'Brush Script MT', cursive;
+        }
+        
+        @keyframes celebrationHeartbeat {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
+        }
+        
+        .celebration-subtitle {
+            color: #8a0a3a;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        /* Love Letter Container (Initially Hidden) */
+        .love-letter-container {
+            display: none;
+            background: linear-gradient(to right, rgba(255, 240, 245, 0.95), rgba(255, 228, 225, 0.95));
+            border-radius: 25px;
+            padding: 50px;
+            margin: 40px 0;
+            border-left: 12px solid #ff4081;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            text-align: left;
+            max-height: 500px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #ff4081 #ffe4e1;
+            animation: letterReveal 1.5s ease-out 0.5s both;
+        }
+        
+        @keyframes letterReveal {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .love-letter-container::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .love-letter-container::-webkit-scrollbar-track {
+            background: #ffe4e1;
+            border-radius: 10px;
+        }
+        
+        .love-letter-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(#ff4081, #ff79a6);
+            border-radius: 10px;
+        }
+        
+        .love-letter {
+            color: #8a0a3a;
+            font-size: 1.5rem;
+            line-height: 2;
+            text-align: justify;
+        }
+        
+        .love-letter p {
+            margin-bottom: 30px;
+            text-indent: 50px;
+        }
+        
+        .letter-signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 40px;
+            font-size: 1.8rem;
+            color: #d32f75;
+            font-family: 'Brush Script MT', cursive;
+        }
+        
+        .response-message {
+            margin-top: 30px;
+            font-size: 2.2rem;
+            color: #c2185b;
+            min-height: 70px;
+            opacity: 0;
+            transition: opacity 0.5s;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px 40px;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .show {
+            opacity: 1 !important;
+        }
+        
+        .instructions {
+            margin-top: 25px;
+            color: #8a0a3a;
+            font-style: italic;
+            font-size: 1.4rem;
+            background: rgba(255, 182, 193, 0.3);
+            padding: 15px 30px;
+            border-radius: 15px;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+        }
+        
+        .footer {
+            margin-top: 40px;
+            color: #8a0a3a;
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        .heart-icon {
+            color: #ff4081;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Floating hearts */
         .floating-hearts {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
@@ -125,183 +292,206 @@
         
         .heart {
             position: absolute;
-            color: rgba(255, 105, 180, 0.6);
-            font-size: 24px;
-            animation: floatUp 6s linear infinite;
+            color: rgba(255, 105, 180, 0.8);
+            font-size: 32px;
+            animation: floatUp 10s linear infinite;
         }
         
         @keyframes floatUp {
             0% {
-                transform: translateY(100vh) rotate(0deg);
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
                 opacity: 0;
             }
             10% {
                 opacity: 1;
+                transform: scale(1);
             }
             90% {
                 opacity: 1;
             }
             100% {
-                transform: translateY(-100px) rotate(360deg);
+                transform: translateY(-100px) rotate(360deg) scale(0.5);
                 opacity: 0;
             }
         }
         
-        .response-message {
-            margin-top: 30px;
-            font-size: 2rem;
-            color: #c2185b;
-            min-height: 60px;
-            opacity: 0;
-            transition: opacity 0.5s;
-            font-weight: bold;
+        /* Music controls */
+        .music-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            gap: 15px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
         
-        .show {
-            opacity: 1 !important;
+        .music-controls:hover {
+            opacity: 1;
         }
         
-        .instructions {
-            margin-top: 30px;
-            color: #8a0a3a;
-            font-style: italic;
-            font-size: 1.2rem;
-            background: rgba(255, 182, 193, 0.2);
-            padding: 15px;
-            border-radius: 15px;
-            display: inline-block;
-        }
-        
-        .footer {
-            margin-top: 50px;
-            color: #8a0a3a;
-            font-size: 1rem;
-        }
-        
-        .heart-icon {
-            color: #ff4081;
-            animation: pulse 1.5s infinite;
-        }
-        
-        .valentine-page {
-            display: none;
-            animation: fadeIn 1s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .valentine-title {
-            color: #d32f75;
-            font-size: 3.5rem;
-            margin-bottom: 30px;
-        }
-        
-        .love-letter {
-            background: linear-gradient(to right, #fff0f6, #ffe4ec);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 30px 0;
-            border-left: 8px solid #ff4081;
-            text-align: left;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .love-letter p {
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-            line-height: 1.7;
-            color: #8a0a3a;
-        }
-        
-        .back-btn {
-            padding: 15px 40px;
-            font-size: 1.3rem;
-            background: linear-gradient(45deg, #ff4081, #ff79a6);
-            color: white;
+        .music-btn {
+            background: rgba(255, 255, 255, 0.95);
             border: none;
-            border-radius: 50px;
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
             cursor: pointer;
-            margin-top: 30px;
-            transition: all 0.3s ease;
-        }
-        
-        .back-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 64, 129, 0.4);
-        }
-        
-        .counter {
-            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
             color: #ff4081;
-            margin-top: 20px;
-            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 64, 129, 0.2);
+        }
+        
+        .music-btn:hover {
+            background: white;
+            transform: scale(1.15);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Celebration Effect */
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
         }
         
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             .container {
-                padding: 25px;
+                padding: 30px;
                 border-radius: 20px;
             }
             
             .title {
-                font-size: 2.2rem;
+                font-size: 3rem;
             }
             
-            .message {
-                font-size: 1.2rem;
-            }
-            
-            .btn {
-                padding: 16px 35px;
-                font-size: 1.6rem;
+            .subtitle {
+                font-size: 1.4rem;
             }
             
             .buttons-container {
-                gap: 20px;
-                min-height: 150px;
-            }
-            
-            .valentine-title {
-                font-size: 2.5rem;
-            }
-            
-            .love-letter p {
-                font-size: 1.2rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .title {
-                font-size: 1.8rem;
-            }
-            
-            .buttons-container {
+                gap: 30px;
                 flex-direction: column;
                 align-items: center;
             }
             
             .btn {
+                padding: 20px 50px;
+                font-size: 2rem;
                 width: 100%;
-                max-width: 280px;
+                max-width: 350px;
+            }
+            
+            .celebration-message {
+                padding: 40px 20px;
+            }
+            
+            .celebration-title {
+                font-size: 3.5rem;
+            }
+            
+            .celebration-subtitle {
+                font-size: 1.6rem;
+            }
+            
+            .love-letter-container {
+                padding: 30px;
+                max-height: 400px;
+            }
+            
+            .love-letter {
+                font-size: 1.3rem;
+                line-height: 1.8;
+            }
+            
+            .music-controls {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .music-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .btn {
+                padding: 18px 40px;
+                font-size: 1.8rem;
+            }
+            
+            .celebration-title {
+                font-size: 2.8rem;
+            }
+            
+            .celebration-subtitle {
+                font-size: 1.4rem;
+            }
+            
+            .love-letter-container {
+                padding: 25px;
+                max-height: 350px;
+            }
+            
+            .love-letter {
+                font-size: 1.2rem;
+            }
+            
+            .music-controls {
+                flex-direction: column;
+                bottom: 15px;
+                right: 15px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Floating hearts -->
+    <div class="floating-hearts" id="floating-hearts"></div>
+    
+    <!-- Celebration Effect -->
+    <div class="celebration" id="celebration"></div>
+    
+    <!-- Music Controls -->
+    <div class="music-controls">
+        <button class="music-btn" id="pause-btn" title="Pause music">⏸️</button>
+        <button class="music-btn" id="volume-up" title="Increase volume">🔊</button>
+        <button class="music-btn" id="volume-down" title="Decrease volume">🔉</button>
+    </div>
+
+    <!-- Background Audio (Auto-play) -->
+    <audio id="bg-music" loop autoplay>
+        <!-- Multiple sources for compatibility -->
+        <source src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3" type="audio/mp3">
+        <source src="song.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
     <!-- Main Proposal Page -->
     <div class="container" id="main-page">
-        <div class="floating-hearts" id="floating-hearts"></div>
-        
         <div class="valentine-content">
             <h1 class="title">Will you be my Valentine, Ammu? 💖</h1>
             
-            <p class="message">
-                My dearest Ammu, every moment with you feels magical.<br>
-                This Valentine's Day, I want to make it unforgettable for you.
+            <p class="subtitle">
+                My dearest, I have something special for you...
             </p>
             
             <div class="buttons-container" id="buttons-container">
@@ -310,40 +500,112 @@
             
             <div class="response-message" id="response-message"></div>
             
-            <div class="counter" id="counter">Attempts to say no: <span id="attempt-count">0</span></div>
-            
-            <div class="instructions">
+            <div class="instructions" id="instructions">
                 Try clicking the "No" button... I dare you! 😉
             </div>
             
-            <div class="footer">
-                Made with <span class="heart-icon">❤️</span> for Ammu
+            <!-- Celebration Message (Initially Hidden) -->
+            <div class="celebration-message" id="celebration-message">
+                <h1 class="celebration-title">YAY! You made me the happiest! 🎉💕</h1>
+                <p class="celebration-subtitle">My heart is overflowing with joy! 💖</p>
+                <div style="font-size: 1.8rem; color: #8a0a3a; margin-top: 20px;">
+                    Now, here's a letter from my heart...
+                </div>
             </div>
-        </div>
-    </div>
-    
-    <!-- Success Page (Hidden initially) -->
-    <div class="container valentine-page" id="success-page">
-        <h1 class="valentine-title">YAY! You made me the happiest! 🎉💕</h1>
-        
-        <div class="love-letter">
-            <p>My darling Ammu,</p>
-            <p>I'm absolutely overjoyed that you said YES! 💖</p>
-            <p>You light up my world in ways I never thought possible. Every smile of yours makes my day, every laugh is music to my ears, and every moment with you is precious.</p>
-            <p>On this Valentine's Day, I promise to cherish you, support you, and love you more with each passing day. You're the best thing that ever happened to me.</p>
-            <p>Get ready for the most romantic Valentine's Day ever! I have special plans for us! 💝</p>
-            <p>With all my love, forever and always,<br>Your Valentine ❤️</p>
-        </div>
-        
-        <button class="back-btn" id="back-btn">Want to see the magic again?</button>
-        
-        <div class="footer" style="margin-top: 40px;">
-            Happy Valentine's Day, my love! 💘
+            
+            <!-- Love Letter Container (Initially Hidden) -->
+            <div class="love-letter-container" id="love-letter-container">
+                <div class="love-letter">
+                    <p>My darling Ammu, I want you to know that when I give you my heart, I hope you accept all the broken pieces and keep them safe with you. I know that there will be some missing pieces too, but I hope you do not mind. I will come vulnerable, soft, and breakable, but I hope you accept me as I am.</p>
+                    
+                    <p>I will write you silly love poems and sing songs with all the words I know, and I hope you will smile whenever you read or hear them, just like I do whenever I think about you. On some days you will find me sitting next to you, and I'll still be so far away, and I hope that on those days you will hold my hand a little tighter, and hug me a little longer.</p>
+                    
+                    <p>On some days I'll be upset with you, but I hope that on those days you will try to talk to me even more. I'll be there for you the same, won't give you time to think about anything. Probably there will be days when we will have a fight, maybe not talk to each other the entire day, but I hope that at night when we sit at the dinner table, and I offer you a slice of cake with my hands, I hope you do not refuse.</p>
+                    
+                    <p>I hope you will take the entire cake and smack it on my face and laugh out loud saying this is how we make up. I promise I won't mind. Instead, I will kiss you with my cream covered lips and we will choose a different flavour for the next time.</p>
+                    
+                    <p>On the days when I make you cry, I hope you remember all the times when I made you laugh too. I hope you will forgive me for my mistakes, and if a day comes when you think that I do not love you anymore, I hope you will remember that I wrote you this letter, and that if needed, I'll write you a thousand more.</p>
+                    
+                    <div class="letter-signature">
+                        With all my love and broken pieces,<br>
+                        Your Valentine forever ❤️
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Made with <span class="heart-icon">❤️</span> for my Ammu
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Audio setup - Auto play music
+            const bgMusic = document.getElementById('bg-music');
+            const pauseBtn = document.getElementById('pause-btn');
+            const volumeUp = document.getElementById('volume-up');
+            const volumeDown = document.getElementById('volume-down');
+            
+            // Set initial volume
+            bgMusic.volume = 0.4;
+            
+            // Auto-play music with fallback
+            let musicStarted = false;
+            
+            function startMusic() {
+                if (!musicStarted) {
+                    bgMusic.play().then(() => {
+                        console.log("Music started successfully");
+                        musicStarted = true;
+                    }).catch(error => {
+                        console.log("Autoplay prevented:", error);
+                        // Show instruction
+                        document.getElementById('instructions').innerHTML = 
+                            "Click anywhere to start the romantic music! 💕";
+                        
+                        // Try to start music on first click
+                        const startOnClick = () => {
+                            bgMusic.play();
+                            musicStarted = true;
+                            document.body.removeEventListener('click', startOnClick);
+                        };
+                        document.body.addEventListener('click', startOnClick);
+                    });
+                }
+            }
+            
+            // Start music immediately
+            startMusic();
+            
+            // Pause/Play toggle
+            let isPlaying = true;
+            pauseBtn.addEventListener('click', function() {
+                if (isPlaying) {
+                    bgMusic.pause();
+                    pauseBtn.innerHTML = '▶️';
+                    pauseBtn.title = 'Play music';
+                } else {
+                    bgMusic.play();
+                    pauseBtn.innerHTML = '⏸️';
+                    pauseBtn.title = 'Pause music';
+                }
+                isPlaying = !isPlaying;
+            });
+            
+            // Volume controls
+            volumeUp.addEventListener('click', function() {
+                if (bgMusic.volume < 1) {
+                    bgMusic.volume = Math.min(1, bgMusic.volume + 0.1);
+                }
+            });
+            
+            volumeDown.addEventListener('click', function() {
+                if (bgMusic.volume > 0) {
+                    bgMusic.volume = Math.max(0, bgMusic.volume - 0.1);
+                }
+            });
+            
             // Create floating hearts
             const floatingHearts = document.getElementById('floating-hearts');
             for (let i = 0; i < 25; i++) {
@@ -355,19 +617,19 @@
                 heart.className = 'heart';
                 heart.innerHTML = '❤️';
                 heart.style.left = `${Math.random() * 100}%`;
-                heart.style.animationDuration = `${Math.random() * 4 + 4}s`;
-                heart.style.animationDelay = `${Math.random() * 2}s`;
-                heart.style.fontSize = `${Math.random() * 20 + 20}px`;
+                heart.style.animationDuration = `${Math.random() * 6 + 8}s`;
+                heart.style.animationDelay = `${Math.random() * 3}s`;
+                heart.style.fontSize = `${Math.random() * 30 + 25}px`;
                 floatingHearts.appendChild(heart);
             }
             
             // Get elements
             const buttonsContainer = document.getElementById('buttons-container');
             const responseMessage = document.getElementById('response-message');
-            const mainPage = document.getElementById('main-page');
-            const successPage = document.getElementById('success-page');
-            const backBtn = document.getElementById('back-btn');
-            const attemptCountEl = document.getElementById('attempt-count');
+            const instructions = document.getElementById('instructions');
+            const celebrationMessage = document.getElementById('celebration-message');
+            const loveLetterContainer = document.getElementById('love-letter-container');
+            const celebration = document.getElementById('celebration');
             
             // Create buttons dynamically
             const yesBtn = document.createElement('button');
@@ -415,12 +677,12 @@
                 // Generate random position
                 let randomX, randomY;
                 
-                // 30% chance to appear near cursor (makes it more challenging)
+                // Smart positioning: 30% chance to appear near cursor
                 if (Math.random() < 0.3) {
                     randomX = Math.max(10, Math.random() * maxX);
                     randomY = Math.max(10, Math.random() * maxY);
                 } else {
-                    // More likely to appear far from center
+                    // More likely to appear in corners
                     randomX = Math.random() < 0.5 ? 10 : maxX;
                     randomY = Math.random() < 0.5 ? 10 : maxY;
                 }
@@ -436,7 +698,6 @@
                 
                 // Update attempt counter
                 attemptCount++;
-                attemptCountEl.textContent = attemptCount;
                 
                 // Show response message
                 showResponse();
@@ -469,70 +730,89 @@
             
             // When "Yes" is clicked
             yesBtn.addEventListener('click', function() {
+                // Hide original content
+                document.querySelector('.title').style.display = 'none';
+                document.querySelector('.subtitle').style.display = 'none';
+                buttonsContainer.style.display = 'none';
+                instructions.style.display = 'none';
+                
                 // Create celebration effect
-                celebrate();
+                createCelebration();
                 
-                // Show success page after a short delay
+                // Show celebration message immediately
+                celebrationMessage.style.display = 'block';
+                
+                // Play celebration sound
+                try {
+                    const celebrationSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-happy-crowd-laugh-464.mp3');
+                    celebrationSound.volume = 0.6;
+                    celebrationSound.play();
+                } catch (e) {
+                    console.log("Celebration sound not available");
+                }
+                
+                // After showing celebration message, show letter with delay
                 setTimeout(() => {
-                    mainPage.style.display = 'none';
-                    successPage.style.display = 'block';
-                }, 1500);
-            });
-            
-            // Back button to return to main page
-            backBtn.addEventListener('click', function() {
-                successPage.style.display = 'none';
-                mainPage.style.display = 'block';
-                
-                // Reset button positions
-                yesBtnSize = 1;
-                yesBtn.style.transform = 'scale(1)';
-                noBtn.style.position = 'static';
-                noBtn.style.left = 'auto';
-                noBtn.style.top = 'auto';
-                attemptCount = 0;
-                attemptCountEl.textContent = '0';
+                    // Scroll to celebration message
+                    celebrationMessage.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Show love letter after 2 seconds
+                    setTimeout(() => {
+                        loveLetterContainer.style.display = 'block';
+                        
+                        // Scroll to letter
+                        setTimeout(() => {
+                            loveLetterContainer.scrollIntoView({ behavior: 'smooth' });
+                        }, 500);
+                    }, 2000);
+                }, 500);
             });
             
             // Celebration function
-            function celebrate() {
+            function createCelebration() {
+                celebration.style.display = 'block';
+                
                 // Create explosion of hearts
-                for (let i = 0; i < 50; i++) {
+                for (let i = 0; i < 150; i++) {
                     setTimeout(() => {
                         const heart = document.createElement('div');
                         heart.innerHTML = '❤️';
                         heart.style.position = 'fixed';
-                        heart.style.fontSize = `${Math.random() * 30 + 20}px`;
+                        heart.style.fontSize = `${Math.random() * 50 + 30}px`;
                         heart.style.color = '#ff4081';
                         heart.style.left = `${Math.random() * 100}vw`;
                         heart.style.top = `${Math.random() * 100}vh`;
                         heart.style.zIndex = '9999';
                         heart.style.pointerEvents = 'none';
-                        heart.style.animation = `floatUp ${Math.random() * 2 + 1}s ease-out forwards`;
+                        heart.style.opacity = '0.9';
+                        heart.style.transform = 'scale(0)';
+                        heart.style.animation = `floatUp ${Math.random() * 3 + 3}s ease-out forwards`;
                         
-                        document.body.appendChild(heart);
+                        // Animate scale
+                        setTimeout(() => {
+                            heart.style.transform = 'scale(1)';
+                            heart.style.transition = 'transform 0.3s ease-out';
+                        }, 100);
+                        
+                        celebration.appendChild(heart);
                         
                         // Remove heart after animation
                         setTimeout(() => {
                             if (heart.parentNode) {
                                 heart.parentNode.removeChild(heart);
                             }
-                        }, 3000);
-                    }, i * 30);
+                        }, 5000);
+                    }, i * 20);
                 }
                 
-                // Add some floating hearts to the container
-                for (let i = 0; i < 10; i++) {
+                // Add more floating hearts
+                for (let i = 0; i < 30; i++) {
                     createHeart(25 + i);
                 }
             }
             
             // Keyboard accessibility
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && successPage.style.display === 'block') {
-                    backBtn.click();
-                }
-                
                 if (e.key === 'Enter' && document.activeElement === yesBtn) {
                     yesBtn.click();
                 }
@@ -545,6 +825,65 @@
             // Focus management for accessibility
             yesBtn.setAttribute('tabindex', '1');
             noBtn.setAttribute('tabindex', '2');
+            
+            // Add music notes animation
+            setInterval(() => {
+                if (bgMusic && !bgMusic.paused) {
+                    const musicNote = document.createElement('div');
+                    musicNote.innerHTML = Math.random() > 0.5 ? '♪' : '♫';
+                    musicNote.style.position = 'fixed';
+                    musicNote.style.color = `rgba(255, 64, 129, ${Math.random() * 0.5 + 0.3})`;
+                    musicNote.style.fontSize = '28px';
+                    musicNote.style.left = `${Math.random() * 100}vw`;
+                    musicNote.style.bottom = '0';
+                    musicNote.style.zIndex = '999';
+                    musicNote.style.animation = 'floatUp 6s linear forwards';
+                    musicNote.style.pointerEvents = 'none';
+                    document.body.appendChild(musicNote);
+                    
+                    setTimeout(() => {
+                        if (musicNote.parentNode) {
+                            musicNote.parentNode.removeChild(musicNote);
+                        }
+                    }, 6000);
+                }
+            }, 2000);
+            
+            // Heart cursor trail
+            let lastX = 0, lastY = 0;
+            document.addEventListener('mousemove', function(e) {
+                if (Date.now() - lastX > 50) {
+                    const trailHeart = document.createElement('div');
+                    trailHeart.innerHTML = '❤️';
+                    trailHeart.style.position = 'fixed';
+                    trailHeart.style.left = e.clientX + 'px';
+                    trailHeart.style.top = e.clientY + 'px';
+                    trailHeart.style.fontSize = '20px';
+                    trailHeart.style.color = 'rgba(255, 64, 129, 0.5)';
+                    trailHeart.style.pointerEvents = 'none';
+                    trailHeart.style.zIndex = '9998';
+                    trailHeart.style.transform = 'translate(-50%, -50%) scale(0)';
+                    document.body.appendChild(trailHeart);
+                    
+                    // Animate
+                    setTimeout(() => {
+                        trailHeart.style.transform = 'translate(-50%, -50%) scale(1)';
+                        trailHeart.style.transition = 'transform 0.2s ease-out, opacity 0.5s ease-out';
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        trailHeart.style.opacity = '0';
+                    }, 300);
+                    
+                    setTimeout(() => {
+                        if (trailHeart.parentNode) {
+                            trailHeart.parentNode.removeChild(trailHeart);
+                        }
+                    }, 1000);
+                    
+                    lastX = Date.now();
+                }
+            });
         });
     </script>
 </body>
