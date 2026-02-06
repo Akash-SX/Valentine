@@ -23,6 +23,8 @@
             padding: 20px;
             overflow-x: hidden;
             cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='28' fill='%23ff4081'%3E❤️%3C/text%3E%3C/svg%3E") 16 16, auto;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         
         @keyframes gradientBG {
@@ -106,6 +108,12 @@
             z-index: 10;
             font-family: 'Arial Rounded MT Bold', sans-serif;
             letter-spacing: 1px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
         }
         
         .yes-btn {
@@ -315,49 +323,6 @@
             }
         }
         
-        /* Music controls (Initially Hidden) */
-        .music-controls {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 100;
-            display: none; /* Hidden until YES is clicked */
-            gap: 15px;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .music-controls.show {
-            display: flex;
-        }
-        
-        .music-controls:hover {
-            opacity: 1;
-        }
-        
-        .music-btn {
-            background: rgba(255, 255, 255, 0.95);
-            border: none;
-            border-radius: 50%;
-            width: 65px;
-            height: 65px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #ff4081;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-            border: 2px solid rgba(255, 64, 129, 0.2);
-        }
-        
-        .music-btn:hover {
-            background: white;
-            transform: scale(1.15);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        }
-        
         /* Celebration Effect */
         .celebration {
             display: none;
@@ -368,6 +333,32 @@
             height: 100%;
             pointer-events: none;
             z-index: 9999;
+        }
+        
+        /* Music Status Indicator (Small, subtle) */
+        .music-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: #ff4081;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 64, 129, 0.2);
+        }
+        
+        .music-status.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* Mobile responsiveness */
@@ -420,15 +411,11 @@
                 line-height: 1.8;
             }
             
-            .music-controls {
-                bottom: 20px;
-                right: 20px;
-            }
-            
-            .music-btn {
-                width: 55px;
-                height: 55px;
-                font-size: 1.6rem;
+            .music-status {
+                bottom: 15px;
+                right: 15px;
+                font-size: 1rem;
+                padding: 8px 16px;
             }
         }
         
@@ -459,10 +446,27 @@
                 font-size: 1.2rem;
             }
             
-            .music-controls {
-                flex-direction: column;
-                bottom: 15px;
-                right: 15px;
+            .music-status {
+                bottom: 10px;
+                right: 10px;
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Mobile touch optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn {
+                padding: 20px 40px;
+                min-height: 70px;
+            }
+            
+            .yes-btn:active {
+                transform: scale(0.95);
+            }
+            
+            .no-btn:active {
+                transform: scale(0.95);
             }
         }
     </style>
@@ -474,18 +478,17 @@
     <!-- Celebration Effect -->
     <div class="celebration" id="celebration"></div>
     
-    <!-- Music Controls (Hidden Initially) -->
-    <div class="music-controls" id="music-controls">
-        <button class="music-btn" id="pause-btn" title="Pause music">⏸️</button>
-        <button class="music-btn" id="volume-up" title="Increase volume">🔊</button>
-        <button class="music-btn" id="volume-down" title="Decrease volume">🔉</button>
+    <!-- Music Status Indicator -->
+    <div class="music-status" id="music-status">
+        <span id="music-icon">🎵</span> Music playing...
     </div>
 
     <!-- Background Audio (NOT auto-play) -->
-    <audio id="bg-music" loop>
+    <audio id="bg-music" loop playsinline>
         <!-- Multiple sources for compatibility -->
         <source src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3" type="audio/mp3">
         <source src="song.mp3" type="audio/mp3">
+        <source src="song.ogg" type="audio/ogg">
         Your browser does not support the audio element.
     </audio>
 
@@ -547,59 +550,73 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Audio setup - Music is NOT auto-play
             const bgMusic = document.getElementById('bg-music');
-            const musicControls = document.getElementById('music-controls');
-            const pauseBtn = document.getElementById('pause-btn');
-            const volumeUp = document.getElementById('volume-up');
-            const volumeDown = document.getElementById('volume-down');
+            const musicStatus = document.getElementById('music-status');
+            const musicIcon = document.getElementById('music-icon');
             
-            // Set initial volume
-            bgMusic.volume = 0.4;
+            // Set initial volume (fixed at 70%)
+            bgMusic.volume = 0.7;
             
             // Music is NOT playing initially
             let isPlaying = false;
+            let musicStarted = false;
             
             // Function to start music (called only when YES is clicked)
             function startMusic() {
-                bgMusic.play().then(() => {
-                    console.log("Romantic music started!");
-                    isPlaying = true;
-                    // Show music controls
-                    musicControls.classList.add('show');
-                    
-                    // Start music notes animation
-                    startMusicNotes();
-                    
-                }).catch(error => {
-                    console.log("Could not start music:", error);
-                    // If autoplay is blocked, show instruction
-                    setTimeout(() => {
-                        alert("Click anywhere to start the romantic music! 💕");
-                    }, 1000);
-                    
-                    // Try to start on next click
-                    document.body.addEventListener('click', function startOnClick() {
-                        bgMusic.play();
+                if (musicStarted) return; // Prevent multiple starts
+                
+                musicStarted = true;
+                
+                // Show music status
+                musicStatus.classList.add('show');
+                
+                // Try to play music with user interaction
+                const playPromise = bgMusic.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("Romantic music started!");
                         isPlaying = true;
-                        musicControls.classList.add('show');
+                        musicIcon.textContent = "🎵";
+                        
+                        // Start music notes animation
                         startMusicNotes();
-                        document.body.removeEventListener('click', startOnClick);
-                    }, { once: true });
-                });
+                        
+                    }).catch(error => {
+                        console.log("Could not start music automatically:", error);
+                        
+                        // For mobile browsers that block autoplay
+                        musicIcon.textContent = "▶️";
+                        musicStatus.innerHTML = '<span id="music-icon">▶️</span> Tap to play music';
+                        
+                        // Make music status clickable to start music
+                        musicStatus.style.cursor = 'pointer';
+                        musicStatus.title = "Click to play romantic music";
+                        
+                        musicStatus.addEventListener('click', function startOnClick() {
+                            bgMusic.play().then(() => {
+                                isPlaying = true;
+                                musicIcon.textContent = "🎵";
+                                musicStatus.innerHTML = '<span id="music-icon">🎵</span> Music playing...';
+                                startMusicNotes();
+                            });
+                            musicStatus.removeEventListener('click', startOnClick);
+                        }, { once: true });
+                        
+                        // Also allow any tap on page to start music
+                        document.addEventListener('click', function pageClickHandler() {
+                            if (!isPlaying) {
+                                bgMusic.play().then(() => {
+                                    isPlaying = true;
+                                    musicIcon.textContent = "🎵";
+                                    musicStatus.innerHTML = '<span id="music-icon">🎵</span> Music playing...';
+                                    startMusicNotes();
+                                });
+                            }
+                            document.removeEventListener('click', pageClickHandler);
+                        }, { once: true });
+                    });
+                }
             }
-            
-            
-            // Volume controls
-            volumeUp.addEventListener('click', function() {
-                if (bgMusic.volume < 1) {
-                    bgMusic.volume = Math.min(1, bgMusic.volume + 0.1);
-                }
-            });
-            
-            volumeDown.addEventListener('click', function() {
-                if (bgMusic.volume > 0) {
-                    bgMusic.volume = Math.max(0, bgMusic.volume - 0.1);
-                }
-            });
             
             // Create floating hearts
             const floatingHearts = document.getElementById('floating-hearts');
@@ -891,6 +908,18 @@
                     lastX = Date.now();
                 }
             });
+            
+            // Mobile touch improvements
+            document.addEventListener('touchstart', function() {}, {passive: true});
+            
+            // Prevent scrolling on mobile when interacting with buttons
+            yesBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+            }, {passive: false});
+            
+            noBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+            }, {passive: false});
         });
     </script>
 </body>
