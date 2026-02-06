@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine, Ammu?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #ffafbd, #ffc3a0);
+            overflow: hidden;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .hearts-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.7);
+            font-size: 20px;
+            animation: float 5s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .title {
+            color: #d32f75;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .message {
+            color: #8a0a3a;
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .yes-btn {
+            background-color: #ff4081;
+            color: white;
+        }
+        
+        .yes-btn:hover {
+            background-color: #f50057;
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(245, 0, 87, 0.4);
+        }
+        
+        .no-btn {
+            background-color: #4a4a4a;
+            color: white;
+            position: relative;
+        }
+        
+        .no-btn:hover {
+            background-color: #333;
+        }
+        
+        .response-message {
+            margin-top: 40px;
+            font-size: 2.2rem;
+            color: #c2185b;
+            min-height: 60px;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        
+        .show {
+            opacity: 1 !important;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            color: #8a0a3a;
+            font-size: 1rem;
+        }
+        
+        .heart-icon {
+            color: #ff4081;
+            margin: 0 5px;
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            color: #8a0a3a;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        /* Valentine message page styles */
+        .valentine-page {
+            display: none;
+            background: linear-gradient(45deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .valentine-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 50px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .valentine-title {
+            color: #d32f75;
+            font-size: 3rem;
+            margin-bottom: 30px;
+        }
+        
+        .valentine-message {
+            color: #8a0a3a;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        
+        .love-note {
+            background-color: #fff0f6;
+            border-left: 5px solid #ff4081;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 1.3rem;
+        }
+        
+        .back-btn {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: #f50057;
+            transform: scale(1.05);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.2rem;
+            }
+            
+            .btn {
+                padding: 15px 30px;
+                font-size: 1.5rem;
+            }
+            
+            .buttons-container {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .message {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1.3rem;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Page -->
+    <div class="container" id="main-page">
+        <div class="hearts-container" id="hearts-container"></div>
+        
+        <h1 class="title">Will you be my Valentine, Ammu? 💖</h1>
+        
+        <p class="message">
+            My dearest Ammu, you light up my world in ways I never imagined possible.<br>
+            This Valentine's Day, I want to make it extra special for you.
+        </p>
+        
+        <div class="buttons-container">
+            <button class="btn yes-btn" id="yes-btn">YES! 💝</button>
+            <button class="btn no-btn" id="no-btn">No 😢</button>
+        </div>
+        
+        <div class="response-message" id="response-message"></div>
+        
+        <div class="instructions">
+            (Try clicking the "No" button... I dare you! 😉)
+        </div>
+        
+        <div class="footer">
+            Made with <span class="heart-icon">❤️</span> for Ammu
+        </div>
+    </div>
+    
+    <!-- Valentine's Day Message Page (Hidden initially) -->
+    <div class="valentine-page" id="valentine-page">
+        <div class="valentine-content">
+            <h1 class="valentine-title">Happy Valentine's Day, Ammu! 💕</h1>
+            
+            <div class="valentine-message">
+                <p>My dearest Ammu,</p>
+                
+                <div class="love-note">
+                    <p>I'm over the moon that you said YES! 💖</p>
+                    <p>You mean everything to me, and I feel like the luckiest person in the world to have you in my life. Every moment with you is special, and I cherish every smile, every laugh, and every memory we create together.</p>
+                    <p>On this Valentine's Day, I want to promise you that I'll always be there for you, support you, love you, and make you feel as special as you are to me.</p>
+                </div>
+                
+                <p>Looking forward to celebrating many more Valentine's Days with you! 🥰</p>
+                
+                <p>With all my love,<br>Your Valentine ❤️</p>
+            </div>
+            
+            <button class="back-btn" id="back-btn">Back to Proposal</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating hearts
+            const heartsContainer = document.getElementById('hearts-container');
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDuration = `${Math.random() * 3 + 4}s`;
+                heart.style.animationDelay = `${Math.random() * 2}s`;
+                heart.style.fontSize = `${Math.random() * 20 + 15}px`;
+                heartsContainer.appendChild(heart);
+            }
+            
+            // Get elements
+            const yesBtn = document.getElementById('yes-btn');
+            const noBtn = document.getElementById('no-btn');
+            const responseMessage = document.getElementById('response-message');
+            const mainPage = document.getElementById('main-page');
+            const valentinePage = document.getElementById('valentine-page');
+            const backBtn = document.getElementById('back-btn');
+            
+            // Responses for when she tries to click "No"
+            const responses = [
+                "Oh come on, Ammu! Give me a chance! 😊",
+                "You can't escape that easily! 😉",
+                "I know you want to say YES! 💖",
+                "Try again, my love! 😘",
+                "You're making this difficult! 😅",
+                "Just click YES already! ❤️",
+                "Don't be shy, Ammu! 😊",
+                "I'm not giving up that easily! 💪"
+            ];
+            
+            let responseIndex = 0;
+            let yesBtnSize = 1;
+            
+            // Make the "No" button move when hovered or clicked
+            noBtn.addEventListener('mouseover', function() {
+                moveNoButton();
+            });
+            
+            noBtn.addEventListener('click', function() {
+                moveNoButton();
+                showResponse();
+            });
+            
+            // Function to move the "No" button to a random position
+            function moveNoButton() {
+                const container = document.querySelector('.buttons-container');
+                const containerRect = container.getBoundingClientRect();
+                const buttonRect = noBtn.getBoundingClientRect();
+                
+                // Calculate random position within container
+                const maxX = containerRect.width - buttonRect.width - 20;
+                const maxY = containerRect.height - buttonRect.height - 20;
+                
+                const randomX = Math.max(10, Math.random() * maxX);
+                const randomY = Math.max(10, Math.random() * maxY);
+                
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = `${randomX}px`;
+                noBtn.style.top = `${randomY}px`;
+                
+                // Increase the size of the "Yes" button
+                yesBtnSize += 0.1;
+                yesBtn.style.transform = `scale(${yesBtnSize})`;
+            }
+            
+            // Function to show response message
+            function showResponse() {
+                responseMessage.textContent = responses[responseIndex];
+                responseMessage.classList.add('show');
+                
+                responseIndex = (responseIndex + 1) % responses.length;
+                
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    responseMessage.classList.remove('show');
+                }, 3000);
+            }
+            
+            // When "Yes" is clicked, show Valentine's Day page
+            yesBtn.addEventListener('click', function() {
+                mainPage.style.display = 'none';
+                valentinePage.style.display = 'block';
+                
+                // Add celebration effect
+                celebrate();
+            });
+            
+            // Back button to return to main page
+            backBtn.addEventListener('click', function() {
+                valentinePage.style.display = 'none';
+                mainPage.style.display = 'block';
+            });
+            
+            // Celebration function with confetti effect
+            function celebrate() {
+                const valentineContent = document.querySelector('.valentine-content');
+                
+                for (let i = 0; i < 100; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.innerHTML = '❤️';
+                        heart.style.position = 'absolute';
+                        heart.style.fontSize = `${Math.random() * 20 + 15}px`;
+                        heart.style.color = '#ff4081';
+                        heart.style.left = `${Math.random() * 100}%`;
+                        heart.style.top = `-30px`;
+                        heart.style.zIndex = '9999';
+                        heart.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+                        
+                        document.body.appendChild(heart);
+                        
+                        // Remove heart after animation
+                        setTimeout(() => {
+                            heart.remove();
+                        }, 5000);
+                    }, i * 50);
+                }
+                
+                // Add CSS for falling animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        0% {
+                            transform: translateY(0) rotate(0deg);
+                            opacity: 1;
+                        }
+                        100% {
+                            transform: translateY(100vh) rotate(360deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Add some initial animation to the title
+            setTimeout(() => {
+                document.querySelector('.title').style.animation = 'pulse 2s infinite';
+            }, 500);
+        });
+    </script>
+</body>
+</html>
